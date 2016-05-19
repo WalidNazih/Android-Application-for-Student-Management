@@ -23,19 +23,21 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imageView1"
         android:layout_alignRight="@+id/imageView1"
-        android:text="Library"
+        android:text="Lessons"
         android:textColor="#C8CECF"
         android:textSize="12sp"
         android:textStyle="bold"
         android:typeface="normal" />
 
-    <TextView
-        android:id="@+id/result"
-        android:layout_width="wrap_content"
+    <ListView
+        android:id="@+id/lessonList"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="TextView"
-        android:textColor="#ffffff" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/imageView1"
+        android:layout_marginTop="19dp" >
+
+    </ListView>
 
 </RelativeLayout>
