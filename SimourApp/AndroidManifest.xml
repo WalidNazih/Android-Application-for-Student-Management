@@ -28,6 +28,18 @@
             android:name=".Lessons"
             android:label="@string/title_activity_lessons" >
         </activity>
+        <activity
+            android:name=".Articles"
+            android:label="@string/title_activity_articles" >
+        </activity>
+        <activity
+            android:name=".Books"
+            android:label="@string/title_activity_books" >
+        </activity>
+        <activity
+            android:name=".Chapters"
+            android:label="@string/title_activity_chapters" >
+        </activity>
     </application>
 
 </manifest>

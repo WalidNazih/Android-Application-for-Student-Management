@@ -5,5 +5,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_lessons">Lessons</string>
+    <string name="title_activity_articles">Articles</string>
+    <string name="title_activity_books">Books</string>
+    <string name="title_activity_chapters">Chapters</string>
 
 </resources>

@@ -18,6 +18,7 @@ public class Lessons extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getActionBar().hide();
 		setContentView(R.layout.activity_lessons);
 		lessonList = (ListView) findViewById(R.id.lessonList);
 		new GetAllBooks().execute(new Connector());
@@ -26,7 +27,7 @@ public class Lessons extends Activity {
 	
 	public void setListAdapter(JSONArray array){
 		
-		this.lessonList.setAdapter(new MyListAdapter(array, this));
+		this.lessonList.setAdapter(new MyListAdapter(array, this, R.layout.mylistview));
 		
 	}
 
@@ -37,7 +38,7 @@ public class Lessons extends Activity {
 
 	            // it is executed on Background thread
 
-	             return params[0].GetAllCustomers();
+	             return params[0].GetAllCustomers("http://centipedestudio.co.nf/getBooks.php");
 	        }
 
 	        @Override

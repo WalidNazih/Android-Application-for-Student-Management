@@ -17,12 +17,14 @@ public class MyListAdapter extends BaseAdapter{
 
 	protected JSONArray results;
 	protected Activity activity;
+	protected int layout;
 	
 	private static LayoutInflater inflater = null;
 	
-	public MyListAdapter(JSONArray results, Activity activity){
+	public MyListAdapter(JSONArray results, Activity activity, int layout){
 		this.results = results;
 		this.activity = activity;
+		this.layout = layout;
 		inflater = (LayoutInflater) this.activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 	
@@ -48,7 +50,7 @@ public class MyListAdapter extends BaseAdapter{
 	public View getView(int position, View convertView, ViewGroup parent) {
 		Cell cell;
 		if(convertView == null){
-			convertView = inflater.inflate(R.layout.mylistview, null);
+			convertView = inflater.inflate(layout, null);
 			cell = new Cell();
 			cell.title = (TextView) convertView.findViewById(R.id.title);
 			cell.image = (ImageView) convertView.findViewById(R.id.image);

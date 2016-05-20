@@ -15,9 +15,8 @@ import java.io.IOException;
 
 public class Connector {
 
-	    public JSONArray GetAllCustomers()
+	    public JSONArray GetAllCustomers(String url)
 	    {
-	        String url = "http://centipedestudio.co.nf/getBooks.php";
 	        HttpEntity httpEntity = null;
 
 	        try
