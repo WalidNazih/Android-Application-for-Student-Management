@@ -3,15 +3,20 @@ package com.example.simourapp;
 import org.json.JSONArray;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class Articles extends Activity {
 
 	protected ListView articleList;
+	protected Context context;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +25,14 @@ public class Articles extends Activity {
 		setContentView(R.layout.activity_articles);
 		articleList = (ListView) findViewById(R.id.lessonList);
 		new GetAllArticles().execute(new Connector());
+		context = this;
+		articleList.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				new Downloader(context, "http://www-us.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz");
+			}
+		});
 	}
 	
 	public void setListAdapter(JSONArray array){
@@ -35,7 +48,7 @@ public class Articles extends Activity {
 
 	            // it is executed on Background thread
 
-	             return params[0].GetAllCustomers("http://centipedestudio.co.nf/getArticles.php");
+	             return params[0].GetAll("http://centipedestudio.co.nf/getArticles.php");
 	        }
 
 	        @Override

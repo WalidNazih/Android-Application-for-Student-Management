@@ -20,6 +20,7 @@ public class Books extends Activity {
 
 	protected ListView bookList;
 	protected Context context;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +34,7 @@ public class Books extends Activity {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				// TODO Auto-generated method stub
-				new Downloader(context, "http://centipedestudio.com/test.txt");
+				new Downloader(context, "http://www-us.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz");
 			}
 		});
 	}
@@ -51,7 +51,7 @@ public class Books extends Activity {
 
 			// it is executed on Background thread
 
-			return params[0].GetAllCustomers("http://centipedestudio.co.nf/getBooks.php");
+			return params[0].GetAll("http://centipedestudio.co.nf/getBooks.php");
 		}
 
 		@Override

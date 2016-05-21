@@ -5,15 +5,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class Lessons extends Activity {
 
 	protected ListView lessonList;
+	protected Context context;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +27,14 @@ public class Lessons extends Activity {
 		setContentView(R.layout.activity_lessons);
 		lessonList = (ListView) findViewById(R.id.lessonList);
 		new GetAllBooks().execute(new Connector());
+		context = this;
+		lessonList.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				new Downloader(context, "http://www-us.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz");
+			}
+		});
 	}
 
 	
@@ -38,7 +51,7 @@ public class Lessons extends Activity {
 
 	            // it is executed on Background thread
 
-	             return params[0].GetAllCustomers("http://centipedestudio.co.nf/getLessons.php");
+	             return params[0].GetAll("http://centipedestudio.co.nf/getLessons.php");
 	        }
 
 	        @Override

@@ -15,7 +15,7 @@ import java.io.IOException;
 
 public class Connector {
 
-	    public JSONArray GetAllCustomers(String url)
+	    public JSONArray GetAll(String url)
 	    {
 	        HttpEntity httpEntity = null;
 
