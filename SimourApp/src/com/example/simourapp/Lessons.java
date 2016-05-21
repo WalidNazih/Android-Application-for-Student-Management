@@ -38,7 +38,7 @@ public class Lessons extends Activity {
 
 	            // it is executed on Background thread
 
-	             return params[0].GetAllCustomers("http://centipedestudio.co.nf/getBooks.php");
+	             return params[0].GetAllCustomers("http://centipedestudio.co.nf/getLessons.php");
 	        }
 
 	        @Override

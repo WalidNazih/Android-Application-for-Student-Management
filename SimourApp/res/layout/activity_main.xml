@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="#28414A"
     tools:context="com.example.simourapp.MainActivity" >
-
+    
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
@@ -29,49 +29,14 @@
         android:textStyle="bold"
         android:typeface="normal" />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/studentarea"
-        android:layout_marginLeft="38dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/teacher" />
-
-    <ImageView
-        android:id="@+id/studentarea"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="40dp"
-        android:layout_toRightOf="@+id/imageView2"
-        android:scaleType="fitXY"
-        android:src="@drawable/student" />
-
-    <TextView
-        android:id="@+id/TextView02"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/studentarea"
-        android:layout_alignRight="@+id/studentarea"
-        android:layout_below="@+id/studentarea"
-        android:layout_marginTop="14dp"
-        android:gravity="center"
-        android:text="Students Lessons"
-        android:textColor="#C8CECF"
-        android:textSize="17sp"
-        android:textStyle="bold"
-        android:typeface="normal" />
-
     <TextView
         android:id="@+id/TextView01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/TextView02"
         android:layout_alignBottom="@+id/TextView02"
-        android:layout_alignLeft="@+id/imageView2"
-        android:layout_toLeftOf="@+id/studentarea"
+        android:layout_alignLeft="@+id/research"
+        android:layout_alignRight="@+id/research"
         android:gravity="center"
         android:text="Research Documents"
         android:textColor="#C8CECF"
@@ -93,21 +58,6 @@
         android:textSize="14sp"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/TextView03"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/imageView2"
-        android:layout_alignLeft="@+id/imageView1"
-        android:layout_alignRight="@+id/imageView1"
-        android:layout_marginBottom="32dp"
-        android:gravity="center"
-        android:text="Welcome to Mr Simour&apos;s Library. Please choose an option."
-        android:textColor="#C8CECF"
-        android:textSize="13sp"
-        android:textStyle="bold"
-        android:typeface="normal" />
-
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
@@ -116,5 +66,54 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="46dp"
         android:src="@drawable/logo" />
+
+    <ImageView
+        android:id="@+id/research"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_above="@+id/TextView01"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="21dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/teacher" />
+
+    <TextView
+        android:id="@+id/TextView02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/studentarea"
+        android:layout_alignRight="@+id/studentarea"
+        android:layout_below="@+id/studentarea"
+        android:gravity="center"
+        android:text="Students Lessons"
+        android:textColor="#C8CECF"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:typeface="normal" />
+
+    <ImageView
+        android:id="@+id/studentarea"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/student" />
+
+    <TextView
+        android:id="@+id/TextView03"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/research"
+        android:layout_alignLeft="@+id/imageView1"
+        android:layout_alignRight="@+id/textView1"
+        android:layout_marginBottom="29dp"
+        android:gravity="center"
+        android:text="Welcome to Mr Simour&apos;s Library. Please choose an option."
+        android:textColor="#C8CECF"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:typeface="normal" />
 
 </RelativeLayout>

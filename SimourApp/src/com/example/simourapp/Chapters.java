@@ -24,7 +24,7 @@ protected ListView chapterList;
 	
 public void setListAdapter(JSONArray array){
 		
-		this.chapterList.setAdapter(new MyListAdapter(array, this, R.layout.articlelist));
+		this.chapterList.setAdapter(new MyListAdapter(array, this, R.layout.chapterlist));
 		
 	}
 

@@ -1,51 +1,66 @@
 package com.example.simourapp;
 
+import java.io.IOException;
+
 import org.json.JSONArray;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class Books extends Activity {
 
 	protected ListView bookList;
-	
+	protected Context context;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getActionBar().hide();
 		setContentView(R.layout.activity_books);
+		context = this;
 		bookList = (ListView) findViewById(R.id.lessonList);
 		new GetAllBooks().execute(new Connector());
+		bookList.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				// TODO Auto-generated method stub
+				new Downloader(context, "http://centipedestudio.com/test.txt");
+			}
+		});
 	}
-	
-public void setListAdapter(JSONArray array){
-		
-		this.bookList.setAdapter(new MyListAdapter(array, this, R.layout.articlelist));
-		
+
+	public void setListAdapter(JSONArray array) {
+
+		this.bookList.setAdapter(new MyListAdapter(array, this, R.layout.booklist));
+
 	}
 
-	    private class GetAllBooks extends AsyncTask<Connector,Long,JSONArray>
-	    {
-	        @Override
-	        protected JSONArray doInBackground(Connector... params) {
+	private class GetAllBooks extends AsyncTask<Connector, Long, JSONArray> {
+		@Override
+		protected JSONArray doInBackground(Connector... params) {
 
-	            // it is executed on Background thread
+			// it is executed on Background thread
 
-	             return params[0].GetAllCustomers("http://centipedestudio.co.nf/getBooks.php");
-	        }
+			return params[0].GetAllCustomers("http://centipedestudio.co.nf/getBooks.php");
+		}
 
-	        @Override
-	        protected void onPostExecute(JSONArray jsonArray) {
+		@Override
+		protected void onPostExecute(JSONArray jsonArray) {
 
-	            setListAdapter(jsonArray);
+			setListAdapter(jsonArray);
 
-
-	        }
-	    }
+		}
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

@@ -1,0 +1,114 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#28414A"
+    tools:context="com.example.simourapp.MainActivity" >
+    
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/footer_lodyas" />
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/books"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignTop="@+id/articles"
+        android:layout_toRightOf="@+id/chapters"
+        android:scaleType="fitXY"
+        android:src="@drawable/agenda" />
+
+    <ImageView
+        android:id="@+id/chapters"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_below="@+id/books"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="58dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/chapter" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/articles"
+        android:layout_alignRight="@+id/articles"
+        android:layout_below="@+id/articles"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="Articles"
+        android:textColor="#C8CECF"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:typeface="normal" />
+
+    <TextView
+        android:id="@+id/TextView01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView1"
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_alignLeft="@+id/books"
+        android:layout_alignRight="@+id/books"
+        android:gravity="center"
+        android:text="Books"
+        android:textColor="#C8CECF"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:typeface="normal" />
+
+    <TextView
+        android:id="@+id/TextView02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/chapters"
+        android:layout_alignRight="@+id/chapters"
+        android:layout_below="@+id/chapters"
+        android:gravity="center"
+        android:text="Chapters"
+        android:textColor="#C8CECF"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:typeface="normal" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/TextView03"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView1"
+        android:layout_alignRight="@+id/imageView1"
+        android:text="Research Documents"
+        android:textColor="#C8CECF"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:typeface="normal" />
+
+    <ImageView
+        android:id="@+id/articles"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_below="@+id/imageView1"
+        android:layout_marginTop="84dp"
+        android:layout_toLeftOf="@+id/chapters"
+        android:scaleType="fitXY"
+        android:src="@drawable/article" />
+
+</RelativeLayout>

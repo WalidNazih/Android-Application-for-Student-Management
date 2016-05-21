@@ -8,5 +8,6 @@
     <string name="title_activity_articles">Articles</string>
     <string name="title_activity_books">Books</string>
     <string name="title_activity_chapters">Chapters</string>
+    <string name="title_activity_research">Research</string>
 
 </resources>
