@@ -1,5 +1,6 @@
 package com.example.simourapp;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import org.json.JSONArray;
@@ -13,8 +14,10 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,29 +29,32 @@ public class MainActivity extends Activity {
 	protected ImageView studentArea;
 	protected ImageView research;
 	protected Context context;
-	
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getActionBar().hide();
-        setContentView(R.layout.activity_main);
+	protected SharedPreferences notifications;
 
-        context = this;
-        
-        studentArea = (ImageView) findViewById(R.id.studentarea);
-        research = (ImageView) findViewById(R.id.research);
-        
-        studentArea.setOnClickListener(new OnClickListener() {
-			
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		getActionBar().hide();
+		setContentView(R.layout.activity_main);
+
+		context = this;
+		notifications = getSharedPreferences("Notifications", Context.MODE_PRIVATE);
+
+		studentArea = (ImageView) findViewById(R.id.studentarea);
+		research = (ImageView) findViewById(R.id.research);
+		
+	
+		studentArea.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				startActivity(new Intent(context, Lessons.class));
 			}
 		});
-        
-        research.setOnClickListener(new OnClickListener() {
-			
+
+		research.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -56,47 +62,50 @@ public class MainActivity extends Activity {
 				startActivity(new Intent(context, Research.class));
 			}
 		});
-        new Notifier(context).execute(new Connector());
-    }
-    
-    
-    class Notifier extends AsyncTask<Connector, String, String>{
-    	
-    	protected Context context;
-    	
-    	public Notifier(Context context){
-    		this.context = context;
-    	}
+		
+		
+		new Notifier(context, notifications).execute(new Connector());
 
-		@Override
-		protected String doInBackground(Connector... params) {
-			// TODO Auto-generated method stub
-			JSONArray j = params[0].GetAll("http://centipedestudio.co.nf/getNotif.php");
-			JSONObject object;
-			try {
-				object = j.getJSONObject(0);
-				if(object != null){
-					Intent i = new Intent(context, ReceiveNotification.class);
-					i.putExtra("title", object.getString("message"));
-					i.putExtra("item", object.getString("item"));
-				     AlarmManager alarm = (AlarmManager) getSystemService(ALARM_SERVICE);
-				     alarm.set(AlarmManager.RTC_WAKEUP, new GregorianCalendar().getTimeInMillis()+5*1000, PendingIntent.getBroadcast(context, 1, i, PendingIntent.FLAG_UPDATE_CURRENT));
-				}
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		Intent i = new Intent(context, ReceiveNotification.class);
+		AlarmManager alarm = (AlarmManager) getSystemService(ALARM_SERVICE);
+		alarm.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), 5000, PendingIntent.getBroadcast(context, 1, i, PendingIntent.FLAG_UPDATE_CURRENT));
+
+	}
+	
+	
+
+}
+
+class Notifier extends AsyncTask<Connector, String, String>{
+	
+	protected Context context;
+	protected SharedPreferences notifications;
+	
+	public Notifier(Context context, SharedPreferences notifications){
+		this.context = context;
+		this.notifications = notifications;
+	}
+	
+	@Override
+	protected String doInBackground(Connector... params) {
+		// TODO Auto-generated method stub
+		JSONArray j = params[0].GetAll("http://centipedestudio.co.nf/getNotif.php");
+		JSONObject object;
+		
+		try {
+			object = j.getJSONObject(0);
+			if(object != null){
+				
+				SharedPreferences.Editor editor = notifications.edit();
+				editor.putString("message", object.getString("message"));
+				editor.putString("title", object.getString("item"));
+				editor.commit();
 			}
-			return null;
-		}
-
-		@Override
-		protected void onProgressUpdate(String... values) {
-			 
 			
-			super.onProgressUpdate(values);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		
-    	
-    }
+		return null;
+	}
 }
