@@ -1,5 +1,7 @@
 package com.example.simourapp;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import org.apache.http.HttpEntity;
@@ -12,11 +14,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 public class Connector {
 
 	    public JSONArray GetAll(String url)
 	    {
+	    	
 	        HttpEntity httpEntity = null;
 
 	        try
@@ -25,32 +29,30 @@ public class Connector {
 	            HttpGet httpGet = new HttpGet(url);
 	            HttpResponse httpResponse = httpClient.execute(httpGet);
 	            httpEntity = httpResponse.getEntity();
+	            if(httpEntity == null ){
+	            	return null;
+	            }else{
+	            	JSONArray jsonArray = null;
+
+	    	        if (httpEntity != null) {
+	    	            try {
+	    	                String entityResponse = EntityUtils.toString(httpEntity);
+	    	                jsonArray = new JSONArray(entityResponse);
+	    	            } catch (JSONException e) {
+	    	                e.printStackTrace();
+	    	            } catch (IOException e) {
+	    	                e.printStackTrace();
+	    	            }
+	    	        }
+
+	    	        return jsonArray;
+	            }
 	        } catch (ClientProtocolException e) {
 	            e.printStackTrace();
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
-	        
-	        JSONArray jsonArray = null;
-
-	        if (httpEntity != null) {
-	            try {
-	                String entityResponse = EntityUtils.toString(httpEntity);
-
-	                Log.e("Entity Response  : ", entityResponse);
-
-	                jsonArray = new JSONArray(entityResponse);
-
-	            } catch (JSONException e) {
-	                e.printStackTrace();
-	            } catch (IOException e) {
-	                e.printStackTrace();
-	            }
-	        }
-
-	        return jsonArray;
-
-
+	        return null;
 	    }
 
 }

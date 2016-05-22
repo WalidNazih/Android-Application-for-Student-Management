@@ -1,5 +1,8 @@
 package com.example.simourapp;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,12 +22,14 @@ public class Lessons extends Activity {
 
 	protected ListView lessonList;
 	protected Context context;
+	protected List<JSONObject> lessons;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getActionBar().hide();
 		setContentView(R.layout.activity_lessons);
+		lessons = new ArrayList<JSONObject>();
 		lessonList = (ListView) findViewById(R.id.lessonList);
 		new GetAllBooks().execute(new Connector());
 		context = this;
@@ -32,7 +37,12 @@ public class Lessons extends Activity {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				new Downloader(context, "http://www-us.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz");
+				try {
+					new Downloader(context, "http://192.168.1.3:8080/Simour/"+lessons.get(position).getString("url"));
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 	}
@@ -48,18 +58,20 @@ public class Lessons extends Activity {
 	    {
 	        @Override
 	        protected JSONArray doInBackground(Connector... params) {
-
-	            // it is executed on Background thread
-
-	             return params[0].GetAll("http://centipedestudio.co.nf/getLessons.php");
+	             return params[0].GetAll("http://192.168.1.3:80/getLessons.php");
 	        }
 
 	        @Override
 	        protected void onPostExecute(JSONArray jsonArray) {
-
 	            setListAdapter(jsonArray);
-
-
+	            for(int i=0; i<jsonArray.length();i++){
+	            	try {
+						lessons.add(jsonArray.getJSONObject(i));
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	            }
 	        }
 	    }
 

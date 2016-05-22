@@ -89,7 +89,7 @@ class Notifier extends AsyncTask<Connector, String, String>{
 	@Override
 	protected String doInBackground(Connector... params) {
 		// TODO Auto-generated method stub
-		JSONArray j = params[0].GetAll("http://centipedestudio.co.nf/getNotif.php");
+		JSONArray j = params[0].GetAll("http://192.168.1.3:80/getNotif.php");
 		JSONObject object;
 		
 		try {

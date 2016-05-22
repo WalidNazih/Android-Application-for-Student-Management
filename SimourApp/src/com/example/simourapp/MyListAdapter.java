@@ -62,6 +62,7 @@ public class MyListAdapter extends BaseAdapter{
 		try {
 			JSONObject object = this.results.getJSONObject(position);
 			cell.title.setText(object.getString("title"));
+			cell.url = object.getString("url");
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -70,9 +71,15 @@ public class MyListAdapter extends BaseAdapter{
 		return convertView;
 	}
 	
+	public String getUrl(int position) throws JSONException{
+		JSONObject object = this.results.getJSONObject(position);
+		return object.getString("url");
+	}
+	
 	private class Cell{
 		protected TextView title;
 		protected ImageView image;
+		protected String url;
 	}
 
 }

@@ -1,6 +1,11 @@
 package com.example.simourapp;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,6 +22,7 @@ public class Articles extends Activity {
 
 	protected ListView articleList;
 	protected Context context;
+	protected List<JSONObject> articles;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,13 +30,19 @@ public class Articles extends Activity {
 		getActionBar().hide();
 		setContentView(R.layout.activity_articles);
 		articleList = (ListView) findViewById(R.id.lessonList);
+		articles = new ArrayList<JSONObject>();
 		new GetAllArticles().execute(new Connector());
 		context = this;
 		articleList.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				new Downloader(context, "http://www-us.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz");
+				try {
+					new Downloader(context, "http://192.168.1.3:8080/Simour/"+articles.get(position).getString("url"));
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 	}
@@ -45,17 +57,21 @@ public class Articles extends Activity {
 	    {
 	        @Override
 	        protected JSONArray doInBackground(Connector... params) {
-
-	            // it is executed on Background thread
-
-	             return params[0].GetAll("http://centipedestudio.co.nf/getArticles.php");
+	             return params[0].GetAll("http://192.168.1.3:80/getArticles.php");
 	        }
 
 	        @Override
 	        protected void onPostExecute(JSONArray jsonArray) {
 
 	            setListAdapter(jsonArray);
-
+	            for(int i=0; i<jsonArray.length();i++){
+	            	try {
+						articles.add(jsonArray.getJSONObject(i));
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	            }
 
 	        }
 	    }
