@@ -68,7 +68,7 @@ public class ReceiveNotification extends BroadcastReceiver {
 
 							NotificationManager notificationManager = (NotificationManager) context
 									.getSystemService(Context.NOTIFICATION_SERVICE);
-							notificationManager.notify(1, builder.build());
+							notificationManager.notify(Integer.parseInt(object.getString("id")), builder.build());
 
 							SharedPreferences.Editor editor = pref.edit();
 							editor.putString("message", object.getString("message"));
