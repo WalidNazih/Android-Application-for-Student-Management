@@ -42,7 +42,7 @@ public class ReceiveNotification extends BroadcastReceiver {
 		@Override
 		protected String doInBackground(Connector... params) {
 			// TODO Auto-generated method stub
-			JSONArray j = params[0].GetAll("http://192.168.1.3:80/getNotif.php");
+			JSONArray j = params[0].GetAll("http://192.168.43.69:8084/getNotif.php");
 			if (j != null) {
 
 				JSONObject object;
@@ -68,7 +68,7 @@ public class ReceiveNotification extends BroadcastReceiver {
 
 							NotificationManager notificationManager = (NotificationManager) context
 									.getSystemService(Context.NOTIFICATION_SERVICE);
-							notificationManager.notify(Integer.parseInt(object.getString("id")), builder.build());
+							notificationManager.notify((1+(int)Math.random()*10000), builder.build());
 
 							SharedPreferences.Editor editor = pref.edit();
 							editor.putString("message", object.getString("message"));

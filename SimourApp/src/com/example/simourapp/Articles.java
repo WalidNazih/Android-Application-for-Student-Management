@@ -38,7 +38,7 @@ public class Articles extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				try {
-					new Downloader(context, "http://192.168.1.3:8080/Simour/"+articles.get(position).getString("url"));
+					new Downloader(context, "http://192.168.43.69:8070/Simour/"+articles.get(position).getString("url"));
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -57,7 +57,7 @@ public class Articles extends Activity {
 	    {
 	        @Override
 	        protected JSONArray doInBackground(Connector... params) {
-	             return params[0].GetAll("http://192.168.1.3:80/getArticles.php");
+	             return params[0].GetAll("http://192.168.43.69:8084/getArticles.php");
 	        }
 
 	        @Override
