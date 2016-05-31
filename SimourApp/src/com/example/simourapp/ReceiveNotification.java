@@ -41,19 +41,20 @@ public class ReceiveNotification extends BroadcastReceiver {
 
 		@Override
 		protected String doInBackground(Connector... params) {
-			// TODO Auto-generated method stub
-			JSONArray j = params[0].GetAll("http://192.168.1.3:80/getNotif.php");
+			SharedPreferences pref = context.getSharedPreferences("Notifications", Context.MODE_PRIVATE);
+			JSONArray j = params[0].GetAll(pref.getString("url", "")+":80/getNotif.php");
 			if (j != null) {
 
 				JSONObject object;
-				SharedPreferences pref = context.getSharedPreferences("Notifications", Context.MODE_PRIVATE);
+				
 				String message = pref.getString("message", "");
 				String item = pref.getString("item", "");
+				String id = pref.getString("id", "");
 				try {
 					object = j.getJSONObject(0);
 					if (object != null) {
 
-						if (!item.equals(object.getString("item")) && !message.equals(object.getString("message"))) {
+						if (!item.equals(object.getString("item")) && !message.equals(object.getString("message")) && !message.equals(object.getString("id"))) {
 							NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 							builder.setTicker(object.getString("message"));
 							builder.setContentTitle(object.getString("message"));
@@ -73,6 +74,7 @@ public class ReceiveNotification extends BroadcastReceiver {
 							SharedPreferences.Editor editor = pref.edit();
 							editor.putString("message", object.getString("message"));
 							editor.putString("title", object.getString("item"));
+							editor.putString("id", object.getString("id"));
 							editor.commit();
 
 						}

@@ -39,7 +39,11 @@ public class MainActivity extends Activity {
 
 		context = this;
 		notifications = getSharedPreferences("Notifications", Context.MODE_PRIVATE);
-
+		
+		SharedPreferences.Editor editor = notifications.edit();
+		editor.putString("url", "http://192.168.1.10");
+		editor.commit();
+		
 		studentArea = (ImageView) findViewById(R.id.studentarea);
 		research = (ImageView) findViewById(R.id.research);
 		
@@ -89,7 +93,7 @@ class Notifier extends AsyncTask<Connector, String, String>{
 	@Override
 	protected String doInBackground(Connector... params) {
 		// TODO Auto-generated method stub
-		JSONArray j = params[0].GetAll("http://192.168.1.3:80/getNotif.php");
+		JSONArray j = params[0].GetAll(notifications.getString("url", "")+":80/getNotif.php");
 		JSONObject object;
 		
 		try {

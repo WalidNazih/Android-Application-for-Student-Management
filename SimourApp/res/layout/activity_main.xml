@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="#28414A"
     tools:context="com.example.simourapp.MainActivity" >
-    
+
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
@@ -53,7 +53,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="44dp"
         android:gravity="center"
-        android:text="Professor Houssin Simour. \n ESTC : KM 7, Route D&apos;El Jadida, Casablanca, Maroc."
+        android:text="Professor Lhoussain Simour. \n ESTC : KM 7, Route D&apos;El Jadida, Casablanca, Maroc."
         android:textColor="#C8CECF"
         android:textSize="14sp"
         android:textStyle="bold" />
@@ -115,5 +115,15 @@
         android:textSize="13sp"
         android:textStyle="bold"
         android:typeface="normal" />
+
+    <ImageView
+        android:id="@+id/msg"
+        android:scaleType="fitXY"
+        android:layout_height="36dp"
+        android:layout_width="40dp"
+        android:layout_alignRight="@+id/studentarea"
+        android:layout_marginRight="3dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/read" />
 
 </RelativeLayout>

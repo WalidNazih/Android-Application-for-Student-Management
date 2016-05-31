@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,12 +24,13 @@ public class Articles extends Activity {
 	protected ListView articleList;
 	protected Context context;
 	protected List<JSONObject> articles;
-	
+	protected SharedPreferences notifications;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getActionBar().hide();
 		setContentView(R.layout.activity_articles);
+		notifications = getSharedPreferences("Notifications", Context.MODE_PRIVATE);
 		articleList = (ListView) findViewById(R.id.lessonList);
 		articles = new ArrayList<JSONObject>();
 		new GetAllArticles().execute(new Connector());
@@ -38,7 +40,7 @@ public class Articles extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				try {
-					new Downloader(context, "http://192.168.1.3:8080/Simour/"+articles.get(position).getString("url"));
+					new Downloader(context, notifications.getString("url", "")+":8080/Simour/"+articles.get(position).getString("url"));
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -57,7 +59,7 @@ public class Articles extends Activity {
 	    {
 	        @Override
 	        protected JSONArray doInBackground(Connector... params) {
-	             return params[0].GetAll("http://192.168.1.3:80/getArticles.php");
+	             return params[0].GetAll(notifications.getString("url", "")+":80/getArticles.php");
 	        }
 
 	        @Override
