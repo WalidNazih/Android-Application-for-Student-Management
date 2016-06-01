@@ -110,7 +110,7 @@ class Notifier extends AsyncTask<Connector, String, String>{
 				editor.putString("message", object.getString("message"));
 				editor.putString("title", object.getString("item"));
 				editor.putString("id", object.getString("id"));
-				if(object.getString("message").contains("Message") && !object.getString("item").equals(message)){
+				if(object.getString("message").contains("Message") && !object.getString("item").equals(message) && notifications.getString("read", "").equals("yes")){
 					editor.putString("read", "no");
 				}
 				editor.commit();
