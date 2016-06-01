@@ -9,10 +9,12 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -28,6 +30,7 @@ public class MainActivity extends Activity {
 
 	protected ImageView studentArea;
 	protected ImageView research;
+	protected ImageView msgIcon;
 	protected Context context;
 	protected SharedPreferences notifications;
 
@@ -46,7 +49,7 @@ public class MainActivity extends Activity {
 		
 		studentArea = (ImageView) findViewById(R.id.studentarea);
 		research = (ImageView) findViewById(R.id.research);
-		
+		msgIcon = (ImageView) findViewById(R.id.msg);
 	
 		studentArea.setOnClickListener(new OnClickListener() {
 
@@ -68,7 +71,7 @@ public class MainActivity extends Activity {
 		});
 		
 		
-		new Notifier(context, notifications).execute(new Connector());
+		new Notifier(msgIcon ,context, notifications).execute(new Connector());
 
 		Intent i = new Intent(context, ReceiveNotification.class);
 		AlarmManager alarm = (AlarmManager) getSystemService(ALARM_SERVICE);
@@ -84,10 +87,12 @@ class Notifier extends AsyncTask<Connector, String, String>{
 	
 	protected Context context;
 	protected SharedPreferences notifications;
+	protected ImageView im;
 	
-	public Notifier(Context context, SharedPreferences notifications){
+	public Notifier(ImageView im, Context context, SharedPreferences notifications){
 		this.context = context;
 		this.notifications = notifications;
+		this.im = im;
 	}
 	
 	@Override
@@ -101,8 +106,13 @@ class Notifier extends AsyncTask<Connector, String, String>{
 			if(object != null){
 				
 				SharedPreferences.Editor editor = notifications.edit();
+				String message = notifications.getString("title", "");
 				editor.putString("message", object.getString("message"));
 				editor.putString("title", object.getString("item"));
+				editor.putString("id", object.getString("id"));
+				if(object.getString("message").contains("Message") && !object.getString("item").equals(message)){
+					editor.putString("read", "no");
+				}
 				editor.commit();
 			}
 			
@@ -112,4 +122,57 @@ class Notifier extends AsyncTask<Connector, String, String>{
 		}
 		return null;
 	}
+
+	@Override
+	protected void onPostExecute(String result) {
+		if(notifications.getString("read", "").equals("no")){
+			im.setImageResource(R.drawable.newmsg);
+			im.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					
+					AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+					dialog.setTitle("Message from Mr Simour");
+					dialog.setMessage(notifications.getString("title", ""));
+					dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+							im.setImageResource(R.drawable.read);
+							SharedPreferences.Editor editor = notifications.edit();
+							editor.putString("read", "yes");
+							editor.commit();
+						}
+					});
+					AlertDialog alert = dialog.create();
+					alert.show();
+				}
+			});
+		}else{
+			im.setImageResource(R.drawable.read);
+			im.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					
+					AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+					dialog.setTitle("Message from Mr Simour");
+					dialog.setMessage(notifications.getString("title", ""));
+					dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+					});
+					AlertDialog alert = dialog.create();
+					alert.show();
+				}
+			});
+		}
+	}
+	
+	
 }

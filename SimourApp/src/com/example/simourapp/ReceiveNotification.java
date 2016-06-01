@@ -46,15 +46,13 @@ public class ReceiveNotification extends BroadcastReceiver {
 			if (j != null) {
 
 				JSONObject object;
-				
-				String message = pref.getString("message", "");
-				String item = pref.getString("item", "");
 				String id = pref.getString("id", "");
+				String message = pref.getString("title", "");
 				try {
 					object = j.getJSONObject(0);
 					if (object != null) {
 
-						if (!item.equals(object.getString("item")) && !message.equals(object.getString("message")) && !message.equals(object.getString("id"))) {
+						if (!id.equals(object.getString("id")) && !message.equals(object.getString("item"))) {
 							NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 							builder.setTicker(object.getString("message"));
 							builder.setContentTitle(object.getString("message"));
@@ -69,7 +67,7 @@ public class ReceiveNotification extends BroadcastReceiver {
 
 							NotificationManager notificationManager = (NotificationManager) context
 									.getSystemService(Context.NOTIFICATION_SERVICE);
-							notificationManager.notify(Integer.parseInt(object.getString("id")), builder.build());
+							notificationManager.notify((1+(int)Math.random()*10000), builder.build());
 
 							SharedPreferences.Editor editor = pref.edit();
 							editor.putString("message", object.getString("message"));
